@@ -1,4 +1,3 @@
-  
 <!DOCTYPE html>
 <html>
    <head>
@@ -18,39 +17,37 @@
    <body></body>
    <script>
 
-  /* START: image preloading and image selection */
-  var images = ['img/Aff_A1.png', 'img/Aff_A2.png', 'img/Aff_A3.png','img/Aff_A4.png', 'img/Aff_A5.png', 'img/Aff_A6.png','img/Aff_A7.png', 'img/Aff_A8.png', 'img/Aff_A9.png','img/Aff_A10.png','img/Neg_A1.png', 'img/Neg_A2.png', 'img/Neg_A3.png','img/Neg_A4.png', 'img/Neg_A5.png', 'img/Neg_A6.png','img/Neg_A7.png', 'img/Neg_A8.png', 'img/Neg_A9.png','img/Neg_A10.png'];
+  /* START: image preloading and array for image selection */
+  var images = ['img/Aff_A1.png', 'img/Aff_A2.png', 'img/Aff_A3.png','img/Aff_A4.png', 'img/Aff_A5.png', 'img/Aff_A6.png','img/Aff_A7.png', 'img/Aff_A8.png', 'img/Aff_A9.png','img/Aff_A10.png',
+                'img/Neg_A1.png', 'img/Neg_A2.png', 'img/Neg_A3.png','img/Neg_A4.png', 'img/Neg_A5.png', 'img/Neg_A6.png','img/Neg_A7.png', 'img/Neg_A8.png', 'img/Neg_A9.png','img/Neg_A10.png'];
     
   var aff_faces = ['img/Aff_A1.png', 'img/Aff_A2.png', 'img/Aff_A3.png','img/Aff_A4.png', 'img/Aff_A5.png', 'img/Aff_A6.png','img/Aff_A7.png', 'img/Aff_A8.png', 'img/Aff_A9.png','img/Aff_A10.png'];
   var neg_faces = ['img/Neg_A1.png', 'img/Neg_A2.png', 'img/Neg_A3.png','img/Neg_A4.png', 'img/Neg_A5.png', 'img/Neg_A6.png','img/Neg_A7.png', 'img/Neg_A8.png', 'img/Neg_A9.png','img/Neg_A10.png'];
-  
-  var aff_pic = jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0];
-  var neg_pic = jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0];  
-  /* END: image preloading and image selection */
+  /* END: prepare image preloading and image selection */
 
   /* START: create info screen concerning participation requirements */
   var requirements = {
                        type: "html-keyboard-response",
-					   stimulus: "<p><strong>HERZLICH WILLKOMMEN ZU UNSEREM EXPERIMENT</strong></p>" +
+					   stimulus: "<p><strong>HERZLICH WILLKOMMEN ZU UNSEREM EXPERIMENT!</strong></p>" +
 					             "<p>&nbsp;</p>" +
-					             "<p>Um an unserem Experiment teilnehmen zu können, müssen Sie untenstehende Kriterein erfüllen.</p>" +
+					             "<p>Um an unserem Experiment teilnehmen zu können, müssen Sie die untenstehenden Kriterien erfüllen.</p>" +
 								 "<p>Falls Sie die <strong> Kriterien nicht erfüllen</strong>, nehmen Sie bitte <strong>nicht</strong> teil.</p>" +
                                  "<p>&nbsp;</p>" +
+								 "<p><strong>TEILNAHMEKRITERIEN</strong></p>" +
 								 "<p><strong>Deutsch</strong> ist Ihre <strong>Muttersprache</strong>.</p>" +
 								 "<p>Sie sind zwischen <strong> 18 und 60 Jahre</strong> alt.</p>" +
-								 "<p>Sie nutzen einen <strong>Computer oder Laptop</strong> (kein Tablet oder Smartphone) für das Experiment.</p>" +
+								 "<p>Sie nutzen einen <strong>Computer oder Laptop</strong> (kein Tablet oder Smartphone).</p>" +
 								 "<p>&nbsp;</p>" +
-                                 "<p><strong>Wenn Sie alle obigen Kriterien erfüllen, drücken Sie bitte die Leertaste, um fortzufahren.</strong></p>",                         								 
+                                 "<p><strong>Wenn Sie alle oben genannte Kriterien erfüllen, drücken Sie bitte die Leertaste, um fortzufahren.</strong></p>",                         								 
 					   choices: ['space'],
 					   post_trial_gap: 500
 					 };  
   /* END: create info screen concerning participation requirements */    
   
   /* START: create declaration of consent */
-  // verstehe ich nicht ganz, das offnet sich bei mir hierin einem weiteren Fenster???
   var check_consent = function(elem) {
 		                 if ($('#consent_checkbox').is(':checked')) {return true;}
-		                 else {alert("Vielen Dank für Ihr Interesse an unserem Experiment. Wenn Sie zustimmen, geben Sie uns bitte Ihr Einverständnis.");return false;} 
+		                 else {alert("Vielen Dank für Ihr Interesse an unserem Experiment. Wenn Sie teilnehmen möchten, geben Sie uns bitte Ihr Einverständnis.");return false;} 
 					     return false;
 	                                 };
   
@@ -77,7 +74,7 @@
 
   var gender = {
                  type: 'survey-multi-choice',
-				 questions: [{prompt: "Bitte wählen Sie Ihr Geschlecht,", options: ["männlich", "weiblich", "divers"], required: 'true'}],
+				 questions: [{prompt: "Bitte wählen Sie Ihr Geschlecht.", options: ["männlich", "weiblich", "divers"], required: 'true'}],
 				 button_label: 'Weiter',
 				 on_finish: function(data){
 			                   var responses = JSON.parse(data.responses);
@@ -102,32 +99,31 @@
 				     questions: [{prompt: "Bitte geben Sie Ihre Händigkeit an.", options: ["rechtshändig", "linkshändig", "beidhändig"], required: 'true'}],
 					 button_label: 'Weiter',
 					 on_finish: function(data){
-			                      var responses = JSON.parse(data.responses);
+			                       var responses = JSON.parse(data.responses);
 					 		       var help_handedness = responses.Q0;
-					 	       jsPsych.data.addProperties({handedness: help_handedness});
+					 	           jsPsych.data.addProperties({handedness: help_handedness});
 							                  }
 			       };
   /* END: create questions concerning sociodemographic variables */
   
   /* START: create instructions */
   var instructions = {
-	                     type: "html-keyboard-response",
-			             stimulus: 
-						 		"<p> <strong>INSTRUKTION</strong></p>" +
-        						"<p>Im Folgenden wird Ihnen jeweils ein Satz gemeinsam mit einem Bild präsentiert.</p>" +
-       							"<P>Bitte lesen Sie jeden Satz aufmerksam. Sobald Sie einen Satz gelesen und vestanden haben,</p>" +
-        						"<p>drücken Sie bitte die Leertaste. Dann folgt der nächste Satz.</p>" +
-								"<p>Bitte lesen Sie jeden Satz nur einmal.</p>" +
-								"<p>&nbsp;</p>" +
-        						"<p>Gelegentlich werden Ihnen auch Fragen präsentiert.</p>" +
-								"<p>Dabei handelt es sich um Ja/Nein-Fragen, die sich auch den jeweils zuvor präsentierten Satz beziehen.</p>" +
-								"<p>Beantworten Sie diese Fragen durch Drücken der folgenden Tasten: </p>" +
-								"<p>&nbsp;</p>" +
-        						"<p><strong>Ja</strong> = Taste <strong>J</strong>.</p>" +
-        						"<p><strong>Nein</strong> = Taste <strong>N</strong>.</p>" +
-								"<p>&nbsp;</p>" +
-       							"<p>Es folgen nun einige Probedurchgänge.</p>"+
-								"<p>Drücken Sie nun bitte die Leertaste, um fortzufahren.</p>" ,		
+	                   type: "html-keyboard-response",
+			           stimulus: "<p><strong>INSTRUKTION</strong></p>" +
+        						 "<p>Im Folgenden wird Ihnen jeweils ein Bild gemeinsam mit einem Satz präsentiert.</p>" +
+       							 "<P>Bitte lesen Sie jeden Satz aufmerksam durch. Sobald Sie den Satz gelesen und vestanden haben,</p>" +
+        						 "<p>drücken Sie bitte die Leertaste. Dann folgt der nächste Durchgang.</p>" +
+								 "<p>Bitte lesen Sie jeden Satz nur einmal.</p>" +
+								 "<p>&nbsp;</p>" +
+        						 "<p>Gelegentlich werden Ihnen auch Fragen präsentiert.</p>" +
+								 "<p>Dabei handelt es sich um Fragen, die sich auf den jeweils zuvor präsentierten Satz beziehen.</p>" +
+								 "<p>Beantworten Sie diese Fragen mit <strong>Ja oder Nein</strong>, indem Sie die folgenden Tasten benutzen: </p>" +
+								 "<p>&nbsp;</p>" +
+        						 "<p><strong>Ja</strong> = Taste <strong>C</strong>.</p>" +
+        						 "<p><strong>Nein</strong> = Taste <strong>M</strong>.</p>" +
+								 "<p>&nbsp;</p>" +
+       							 "<p>Es folgen nun einige Probedurchgänge.</p>"+
+								 "<p>Drücken Sie bitte die Leertaste, um zu starten.</p>",		
                          choices: ['space'],
                          post_trial_gap: 500
                      };
@@ -138,10 +134,9 @@
                             type: 'html-keyboard-response',                          
                             stimulus: jsPsych.timelineVariable('question'),
 						    data: jsPsych.timelineVariable('data'),
-						    choices: ['j', 'n'],
+						    choices: ['c', 'm'],
 						    prompt: "<p>&nbsp;</p>" +
-									"<p>Stimmt das?</p>" +
-							        "<p> Drücken Sie <strong>'J'</strong> für <strong>'Ja'</strong> und <strong>'N'</strong> für <strong>'Nein'</strong>!</p>",
+									"<p>Drücken Sie die <strong>'C'-Taste</strong> für <strong>'Ja'</strong> oder die <strong>'M'-Taste</strong> für <strong>'Nein'</strong>!</p>",
                             post_trial_gap: 1000,
                             on_finish: function(data){
 						                  if(data.key_press == data.correct_response)
@@ -153,60 +148,62 @@
   
   /*START: create training block */
   var block_training = {
-           timeline: [ 
-		                { 
-						  type: "html-keyboard-response",
-                          stimulus: '<div style="font-size:40px;">+</div>',
-		                  choices: jsPsych.NO_KEYS,
-		                  trial_duration: 800,
-						  response_ends_trial: false						  
-					    },
+                  timeline: [ 
+		                      { 
+						        type: "html-keyboard-response",
+                                stimulus: '<div style="font-size:40px;">+</div>',
+		                        choices: jsPsych.NO_KEYS,
+		                        trial_duration: 800,
+						        response_ends_trial: false						  
+					          },
 			   
-                        { 
-						  type: "image-keyboard-response",
-						  stimulus: jsPsych.timelineVariable('picture'),
-						  data: jsPsych.timelineVariable('data'),
-						  choices: jsPsych.NO_KEYS,
-						  response_ends_trial: false,
-						  trial_duration: 500,
-						  prompt: '<div style="font-size: 20px;color:white;">placeholder</div>',
-						},
+                              { 
+						        type: "image-keyboard-response",
+						        stimulus: jsPsych.timelineVariable('picture'),
+						        data: jsPsych.timelineVariable('data'),
+						        choices: jsPsych.NO_KEYS,
+						        response_ends_trial: false,
+						        trial_duration: 500,
+						        prompt: '<div style="font-size: 20px;color:white;">placeholder</div>',
+								on_finish: function(data){data.picpres = true;}
+						      }, 
 						
-						{
-	                      type: "image-keyboard-response",
-				          stimulus: jsPsych.timelineVariable('picture'),
-				          data: jsPsych.timelineVariable('data'),
-						  prompt: jsPsych.timelineVariable('sentence'),
-				          choices: ['space'],
-						  post_trial_gap: 1000,
-						  on_finish: function(data){data.reading = true;}
-                        }, 
+						      {
+	                            type: "image-keyboard-response",
+				                stimulus: jsPsych.timelineVariable('picture'),
+				                data: jsPsych.timelineVariable('data'),
+						        prompt: jsPsych.timelineVariable('sentence'),
+				                choices: ['space'],
+						        post_trial_gap: 1000,
+						        on_finish: function(data){data.reading = true;}
+                              }, 
 
-                        { 
-						  timeline: [if_trial_question],
-		                  conditional_function: function(){
-		                                           var data_previous_trial = jsPsych.data.get().last(1).values()[0];
-	                                               if(data_previous_trial.indicator == "yes")
-									                     {return true;} else {return false;}
-													      }
-				        },						
+                              { 
+						        timeline: [if_trial_question],
+		                        conditional_function: function(){
+		                                                 var data_previous_trial = jsPsych.data.get().last(1).values()[0];
+	                                                     if(data_previous_trial.indicator == "yes"){return true;} else {return false;}
+													            }
+				              },						
 		                
-				     ],
+				            ],
 					
 		   timeline_variables: [ /* 8 Übungsitems */                         
 			             				
-		   {sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht Achterbahn fahren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_01', sentence: 'Nein, ich möchte nicht Achterbahn fahren.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}}, 
-{sentence: '<div style="font-size: 20px;">Nein, ich will kein Eis haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person ein Eis haben?</div>', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_02', sentence: 'Nein, ich will kein Eis haben.', polarity: 'negation', face: 'not', indicator: 'yes', question:'Will die Person ein Eis haben?' , correct_response: '78'}},
-{sentence: '<div style="font-size: 20px;">Nein, ich will nicht Kartoffeln schälen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question:'n.a.', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_03', sentence: 'Nein, ich will nicht Kartoffeln schälen.', polarity: 'negation', face: 'yes', indicator: 'not', question:'n.a' , correct_response: 'n.a.'}},
-{sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Serviette.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_04', sentence: 'Nein, ich möchte keine Serviette.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-{sentence: '<div style="font-size: 20px;">Ja, ich will eine Party geben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um eine Party?</div>', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_05', sentence: 'Ja, ich will eine Party geben.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um eine Party?', correct_response: '74'}},
-{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Karten spielen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_06', sentence: 'Ja, ich will jetzt Karten spielen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-{sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Termin ausmachen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_07', sentence: 'Ja, ich möchte einen Termin ausmachen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt Geld abheben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Münze"?</div>', data: {experiment: 'NegFace', version: '1', block: '2', item_id: 'item_08', sentence: 'Ja, ich möchte jetzt Geld abheben.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Münze"?', correct_response: '78'}},
+		   {sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht Achterbahn fahren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_01', sentence: 'Nein, ich möchte nicht Achterbahn fahren.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}}, 
+           {sentence: '<div style="font-size: 20px;">Nein, ich will kein Eis haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person ein Eis haben?</div>', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_02', sentence: 'Nein, ich will kein Eis haben.', polarity: 'negation', face: 'not', indicator: 'yes', question:'Will die Person ein Eis haben?' , correct_response: '77'}},
+           {sentence: '<div style="font-size: 20px;">Nein, ich will nicht Kartoffeln schälen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question:'n.a.', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_03', sentence: 'Nein, ich will nicht Kartoffeln schälen.', polarity: 'negation', face: 'yes', indicator: 'not', question:'n.a' , correct_response: 'n.a.'}},
+           {sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Serviette.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_04', sentence: 'Nein, ich möchte keine Serviette.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
+           {sentence: '<div style="font-size: 20px;">Ja, ich will eine Party geben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um eine Party?</div>', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_05', sentence: 'Ja, ich will eine Party geben.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um eine Party?', correct_response: '67'}},
+           {sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Karten spielen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_06', sentence: 'Ja, ich will jetzt Karten spielen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
+           {sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Termin ausmachen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_07', sentence: 'Ja, ich möchte einen Termin ausmachen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
+           {sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt Geld abheben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Münze"?</div>', data: {experiment: 'NegFace', version: '3', block: '1', item_id: 'training_08', sentence: 'Ja, ich möchte jetzt Geld abheben.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Münze"?', correct_response: '77'}}
+							   
 							   ],
       
 		   randomize_order: true
-		         };
+		         
+				   };
   /* END: create training block */
   
   /* START: create experimental blocks */
@@ -228,6 +225,7 @@
 						  response_ends_trial: false,
 						  trial_duration: 500,
 						  prompt: '<div style="font-size: 20px;color:white;">placeholder</div>',
+						  on_finish: function(data){data.picpres = true;}
 						},
 						
 						{
@@ -251,15 +249,15 @@
 		                
 				     ],
 					
-		   timeline_variables: [ /* 40 Items (Version1, Block 2) */                         		     
+		   timeline_variables: [ /* 40 Items (Version_3, Block_2) */                         		     
 						
-		   	{sentence: '<div style="font-size: 20px;">Nein, ich will kein Glas Wasser haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person etwas trinken?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_01', sentence: 'Nein, ich will kein Glas Wasser haben.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Will die Person etwas trinken?', correct_response: '78'}}, 
+		   	{sentence: '<div style="font-size: 20px;">Nein, ich will kein Glas Wasser haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person etwas trinken?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_01', sentence: 'Nein, ich will kein Glas Wasser haben.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Will die Person etwas trinken?', correct_response: '77'}}, 
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Zeitung lesen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_02', sentence: 'Ja, ich möchte eine Zeitung lesen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich möchte kein Brot essen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_03', sentence: 'Nein, ich möchte kein Brot haben.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Ja, ich will eine Ausbildung machen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_04', sentence: 'Ja, ich möchte eine Ausbildung machen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
+			{sentence: '<div style="font-size: 20px;">Ja, ich will eine Ausbildung machen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_04', sentence: 'Ja, ich will eine Ausbildung machen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will kein Geschenk.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_05', sentence: 'Nein, ich will kein Geschenk.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will einen Beleg.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_06', sentence: 'Ja, ich will einen Beleg.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Werbeprospekt haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Interessiert sich die Person für Werbung?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_07', sentence: 'Nein, ich will keinen Werbeprospekt haben.', polarity: 'negation', face: 'not', indicator: 'yes', question: 'Interessiert sich die Person für Werbung?', correct_response: '78'}},
+			{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Werbeprospekt haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Interessiert sich die Person für Werbung?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_07', sentence: 'Nein, ich will keinen Werbeprospekt haben.', polarity: 'negation', face: 'not', indicator: 'yes', question: 'Interessiert sich die Person für Werbung?', correct_response: '77'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will ein Fahrrad haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_08', sentence: 'Ja, ich will ein Fahrrad haben.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich brauche keine Unterschrift.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_09', sentence: 'Nein, ich brauche keine Unterschrift.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Kaffee trinken.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_10', sentence: 'Ja, ich möchte einen Kaffee trinken.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
@@ -267,35 +265,38 @@
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Film anschauen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_12', sentence: 'Ja, ich möchte einen Film anschauen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Hund.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_13', sentence: 'Nein, ich will keinen Hund.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Tragetasche.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_14', sentence: 'Ja, ich möchte eine Tragetasche.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Rose.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um eine Lampe?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_15', sentence: 'Nein, ich möchte keine Rose.', polarity: 'negation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um eine Lampe?', correct_response: '78'}},
+			{sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Rose.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um eine Lampe?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_15', sentence: 'Nein, ich möchte keine Rose.', polarity: 'negation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um eine Lampe?', correct_response: '77'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will eine Eintrittskarte.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_16', sentence: 'Ja, ich will eine Eintrittskarte.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will keine Versicherung abschließen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_17', sentence: 'Nein, ich will keine Versicherung abschließen.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt aufstehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_18', sentence: 'Ja, ich möchte jetzt aufstehen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will nicht schwimmen gehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_19', sentence: 'Nein, ich will nicht schwimmen gehen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Brille tragen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Brille"?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_20', sentence: 'Ja, ich möchte eine Brille tragen.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Brille"?', correct_response: '74'}},
-			{sentence: '<div style="font-size: 20px;">Nein, ich will nicht einkaufen gehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person etwas einkaufen?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_21', sentence: 'Nein, ich will nicht einkaufen gehen.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Möchte die Person etwas einkaufen?', correct_response: '78'}},
+			{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Brille tragen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Brille"?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_20', sentence: 'Ja, ich möchte eine Brille tragen.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Brille"?', correct_response: '67'}},
+			{sentence: '<div style="font-size: 20px;">Nein, ich will nicht einkaufen gehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person etwas einkaufen?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_21', sentence: 'Nein, ich will nicht einkaufen gehen.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Möchte die Person etwas einkaufen?', correct_response: '77'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt telefonieren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_22', sentence: 'Ja, ich will jetzt telefonieren.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will nicht Skateboard fahren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_23', sentence: 'Nein, ich will nicht Skateboard fahren.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte ein Kissen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_24', sentence: 'Ja, ich möchte ein Kissen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht mitkommen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_25', sentence: 'Nein, ich möchte nicht mitkommen.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt duschen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person ums Duschen?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_26', sentence: 'Ja, ich will jetzt duschen.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Geht es in der Aussage der Person ums Duschen?', correct_response: '74'}},
+			{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt duschen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person ums Duschen?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_26', sentence: 'Ja, ich will jetzt duschen.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Geht es in der Aussage der Person ums Duschen?', correct_response: '67'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht tanzen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_27', sentence: 'Nein, ich möchte nicht tanzen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Ja, ich möchte ein Foto machen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person fotographieren?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_28', sentence: 'Ja, ich möchte ein Foto machen.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Möchte die Person fotographieren?', correct_response: '74'}},
+			{sentence: '<div style="font-size: 20px;">Ja, ich möchte ein Foto machen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person fotographieren?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_28', sentence: 'Ja, ich möchte ein Foto machen.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Möchte die Person fotographieren?', correct_response: '67'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will mich nicht setzen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_29', sentence: 'Nein, ich will mich nicht setzen.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt abspülen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_30', sentence: 'Ja, ich will jetzt abspülen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Umarmung.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_31', sentence: 'Nein, ich möchte keine Umarmung.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt untersucht werden.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um ein Auto?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_32', sentence: 'Ja, ich möchte jetzt untersucht werden.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um ein Auto?', correct_response: '78'}},
+			{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt untersucht werden.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um ein Auto?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_32', sentence: 'Ja, ich möchte jetzt untersucht werden.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um ein Auto?', correct_response: '77'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht schlafen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_33', sentence: 'Nein, ich möchte nicht schlafen.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Schach spielen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_34', sentence: 'Ja, ich will jetzt Schach spielen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will nicht verreisen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_35', sentence: 'Nein, ich will nicht verreisen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt geimpft werden.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_36', sentence: 'Ja, ich will jetzt geimpft werden.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Katze.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_37', sentence: 'Nein, ich möchte keine Katze.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-			{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt Klavier spielen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person Musik machen?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_38', sentence: 'Ja, ich möchte jetzt Klavier spielen.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Will die Person Musik machen?', correct_response: '74'}},
+			{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt Klavier spielen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person Musik machen?</div>', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_38', sentence: 'Ja, ich möchte jetzt Klavier spielen.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Will die Person Musik machen?', correct_response: '67'}},
 			{sentence: '<div style="font-size: 20px;">Nein, ich will nicht singen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_39', sentence: 'Nein, ich will nicht singen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 			{sentence: '<div style="font-size: 20px;">Ja, ich möchte ein Sofa kaufen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '2', item_id: 'item_40', sentence: 'Ja, ich möchte ein Sofa kaufen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-					], 
-		   randomize_order: true
-		         };
+					
+					 ], 
+					
+		    randomize_order: true
+		   
+		        };
 				 
 				 
  var block_2 = {
@@ -316,6 +317,7 @@
 						  response_ends_trial: false,
 						  trial_duration: 500,
 						  prompt: '<div style="font-size: 20px;color:white;">placeholder</div>',
+						  on_finish: function(data){data.picpres = true;}
 						},
 						
 						{
@@ -339,24 +341,24 @@
 		                
 				     ],
 					
-		   timeline_variables: [ /* 40 Items (Version2, Block 3)*/                         
+		   timeline_variables: [ /* 40 Items (Version_3, Block_3)*/                         
 			            
 		   		{sentence: '<div style="font-size: 20px;">Nein, ich will nicht hier bleiben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_41', sentence: 'Nein, ich will nicht hier bleiben.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt nach Hause.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_42', sentence: 'Ja, ich will jetzt nach Hause.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will nicht Spanisch lernen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_43', sentence: 'Nein, ich will nicht Spanisch lernen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will ein Haus bauen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_44', sentence: 'Ja, ich will ein Haus bauen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht in den Zoo.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Strand"?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_45', sentence: 'Nein, ich möchte nicht in den Zoo.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Strand"?', correct_response: '78'}},
+				{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht in den Zoo.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Strand"?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_45', sentence: 'Nein, ich möchte nicht in den Zoo.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Strand"?', correct_response: '77'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt aufräumen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_46', sentence: 'Ja, ich will jetzt aufräumen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht aufhören.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_47', sentence: 'Nein, ich möchte nicht aufhören.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt ins Kino gehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_48', sentence: 'Ja, ich will jetzt ins Kino gehen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will nicht baden.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_49', sentence: 'Nein, ich will nicht baden.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt putzen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_50', sentence: 'Ja, ich will jetzt putzen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Nachtisch haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_51', sentence: 'Nein, ich will keinen Nachtisch haben.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt wandern gehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person eine Wanderung machen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_52', sentence: 'Ja, ich will jetzt wandern gehen.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Möchte die Person eine Wanderung machen?', correct_response: '74'}},
+				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt wandern gehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person eine Wanderung machen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_52', sentence: 'Ja, ich will jetzt wandern gehen.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Möchte die Person eine Wanderung machen?', correct_response: '67'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte keine Tablette nehmen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_53', sentence: 'Nein, ich möchte keine Tablette nehmen.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt malen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_54', sentence: 'Ja, ich möchte jetzt malen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte kein Bild kaufen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_55', sentence: 'Nein, ich möchte kein Bild kaufen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Pizza.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person eine Pizza essen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_56', sentence: 'Ja, ich möchte eine Pizza.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Will die Person eine Pizza essen?', correct_response: '74'}},
+				{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Pizza.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person eine Pizza essen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_56', sentence: 'Ja, ich möchte eine Pizza.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Will die Person eine Pizza essen?', correct_response: '67'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht kochen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_57', sentence: 'Nein, ich möchte nicht kochen.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will eine Hose anziehen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_58', sentence: 'Ja, ich will eine Hose anziehen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will kein Gespräch führen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_59', sentence: 'Nein, ich will kein Gespräch führen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
@@ -364,88 +366,85 @@
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte nicht Fahrrad fahren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_61', sentence: 'Nein, ich möchte nicht Fahrrad fahren.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Kuchen backen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_62', sentence: 'Ja, ich möchte einen Kuchen backen.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte keinen Clown spielen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_63', sentence: 'Nein, ich möchte keinen Clown spielen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt angeln.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person ums Angeln?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_64', sentence: 'Ja, ich möchte jetzt angeln.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person ums Angeln?', correct_response: '74'}},
-				{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Baum pflanzen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person einen Baum in die Erde setzen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_65', sentence: 'Nein, ich will keinen Baum pflanzen.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Will die Person einen Baum in die Erde setzen?', correct_response: '78'}},
+				{sentence: '<div style="font-size: 20px;">Ja, ich möchte jetzt angeln.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person ums Angeln?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_64', sentence: 'Ja, ich möchte jetzt angeln.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person ums Angeln?', correct_response: '67'}},
+				{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Baum pflanzen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person einen Baum in die Erde setzen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_65', sentence: 'Nein, ich will keinen Baum pflanzen.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Will die Person einen Baum in die Erde setzen?', correct_response: '77'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich möchte ein Pferd reiten.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_66', sentence: 'Ja, ich möchte ein Pferd reiten.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Nein, ich will kein Hemd bügeln.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person ums Wandern?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_67', sentence: 'Nein, ich will kein Hemd bügeln.', polarity: 'negation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person ums Wandern?', correct_response: '78'}},
+				{sentence: '<div style="font-size: 20px;">Nein, ich will kein Hemd bügeln.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person ums Wandern?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_67', sentence: 'Nein, ich will kein Hemd bügeln.', polarity: 'negation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person ums Wandern?', correct_response: '77'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will einen Brief schreiben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_68', sentence: 'Ja, ich will einen Brief schreiben.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Nein, ich will nicht heiraten.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person eine Ehe eingehen?</div>' , data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_69', sentence: 'Nein, ich will nicht heiraten.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Will die Person eine Ehe eingehen?', correct_response: '78'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Zug fahren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person die Eisenbahn benutzen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_70', sentence: 'Ja, ich will jetzt Zug fahren.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Möchte die Person die Eisenbahn benutzen?', correct_response: '74'}},
+				{sentence: '<div style="font-size: 20px;">Nein, ich will nicht heiraten.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Will die Person eine Ehe eingehen?</div>' , data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_69', sentence: 'Nein, ich will nicht heiraten.', polarity: 'negation', face: 'yes', indicator: 'yes', question: 'Will die Person eine Ehe eingehen?', correct_response: '77'}},
+				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Zug fahren.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person die Eisenbahn benutzen?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_70', sentence: 'Ja, ich will jetzt Zug fahren.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Möchte die Person die Eisenbahn benutzen?', correct_response: '67'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich möchte kein Museum besuchen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_71', sentence: 'Nein, ich möchte kein Museum besuchen.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Massage haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um eine Massage?</div>' , data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_72', sentence: 'Ja, ich möchte eine Massage haben.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um eine Massage?', correct_response: '74'}},
+				{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Massage haben.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Geht es in der Aussage der Person um eine Massage?</div>' , data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_72', sentence: 'Ja, ich möchte eine Massage haben.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Geht es in der Aussage der Person um eine Massage?', correct_response: '67'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will kein Haustier.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_73', sentence: 'Nein, ich will kein Haustier.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich möchte eine Blume pflücken.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_74', sentence: 'Ja, ich möchte eine Blume pflücken.', polarity: 'affirmation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will kein Lied hören.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_75', sentence: 'Nein, ich will kein Lied hören.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Ja, ich will eine Zigarette rauchen. </div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_76', sentence: 'Ja, ich will eine Zigarette rauchen.', polarity: 'affirmation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will keine Erstattung erhalten.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_77', sentence: 'Nein, ich will keine Erstattung erhalten.', polarity: 'negation', face: 'yes', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Rasen mähen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person im Garten arbeiten?</div>' , data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_78', sentence: 'Ja, ich will jetzt Rasen mähen.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Möchte die Person im Garten arbeiten?', correct_response: '74'}},
+				{sentence: '<div style="font-size: 20px;">Ja, ich will jetzt Rasen mähen.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(aff_faces, 1)[0], question: '<div style="font-size: 20px;">Möchte die Person im Garten arbeiten?</div>' , data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_78', sentence: 'Ja, ich will jetzt Rasen mähen.', polarity: 'affirmation', face: 'yes', indicator: 'yes', question: 'Möchte die Person im Garten arbeiten?', correct_response: '67'}},
 				{sentence: '<div style="font-size: 20px;">Nein, ich will keinen Pullover stricken.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: 'n.a.', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_79', sentence: 'Nein, ich will keinen Pullover stricken.', polarity: 'negation', face: 'not', indicator: 'no', question: 'n.a.', correct_response: 'n.a.'}},
-				{sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Hasen streicheln.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Elefant"?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_80', sentence: 'Ja, ich möchte einen Hasen streicheln.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Elefant"?', correct_response: '78'}},
-									],
+				{sentence: '<div style="font-size: 20px;">Ja, ich möchte einen Hasen streicheln.</div>', picture: jsPsych.randomization.sampleWithoutReplacement(neg_faces, 1)[0], question: '<div style="font-size: 20px;">Enthält die Aussage der Person das Wort "Elefant"?</div>', data: {experiment: 'NegFace', version: '3', block: '3', item_id: 'item_80', sentence: 'Ja, ich möchte einen Hasen streicheln.', polarity: 'affirmation', face: 'not', indicator: 'yes', question: 'Enthält die Aussage der Person das Wort "Elefant"?', correct_response: '77'}},
+					     
+						       ],
       
-		   randomize_order: true
+		            randomize_order: true
+					
 		         };
    /* END: create experimental blocks */
-
-
-
 
   /* START: randomize order of blocks */  
   var randomized_block_order = jsPsych.randomization.shuffle([block_1, block_2]);
   /* END: randomize order of blocks */	 
 	 
-  /* START: create self-paced rest and debriefing */	
+  /* START: create self-paced rests and debriefing */	
   var rest_after_block_training = {
-                             type: "html-keyboard-response",
-                             stimulus: "<p><strong>Übungsblock beendet! Kurze Pause!</strong></p>" +
-			                           "<p>&nbsp;</p>" +
-			                           "<p><strong>ERINNERUNG:</strong></p>" +
-						               "<P>Bitte lesen Sie jeden Satz aufmerksam. Sobald Sie einen Satz gelesen und vestanden haben,</p>" +
-									   "<p>drücken Sie bitte die Leertaste. Dann folgt der nächste Satz.</p>" +
-									   "<p>Bitte lesen Sie jeden Satz nur einmal.</p>" +
-									   "<p>&nbsp;</p>" +
-									   "<p>Fragen beantworten Sie durch Drücken der folgenden Tasten: </p>" +
-									   "<p><strong>Ja</strong> = Taste <strong>J</strong>.</p>" +
-									   "<p><strong>Nein</strong> = Taste <strong>N</strong>.</p>" +
-									   "<p>&nbsp;</p>" +
-									   "<p>Drücken Sie nun bitte die Leertaste, um die Pause zu beenden und fortzufahren.</p>",
-							 choices: ['space'],
-						     post_trial_gap: 1500				   
-                           };
+                                    type: "html-keyboard-response",
+                                    stimulus: "<p><strong>Übungsblock beendet! Kurze Pause!</strong></p>" +
+			                                  "<p>&nbsp;</p>" +
+			                                  "<p><strong>ERINNERUNG:</strong></p>" +
+						                      "<P>Bitte lesen Sie jeden Satz aufmerksam durch. Sobald Sie den Satz gelesen und vestanden haben,</p>" +
+        						              "<p>drücken Sie bitte die Leertaste. Dann folgt der nächste Durchgang oder eine Verständnisfrage.</p>" +
+									          "<p>Bitte lesen Sie jeden Satz nur einmal.</p>" +
+									          "<p>&nbsp;</p>" +
+									          "<p>Die Fragen beantworten Sie durch das Drücken der folgenden Tasten:</p>" +
+									          "<p><strong>Ja</strong> = Taste <strong>C</strong>.</p>" +
+									          "<p><strong>Nein</strong> = Taste <strong>M</strong>.</p>" +
+									          "<p>&nbsp;</p>" +
+									          "<p>Drücken Sie bitte die Leertaste, um mit dem Experiment zu beginnen.</p>",
+							        choices: ['space'],
+						            post_trial_gap: 1500				   
+                                  };
   
   var rest_after_block_1 = {
                              type: "html-keyboard-response",
-                             stimulus: "<p><strong>Block 1 (von 2) beendet! Kurze Pause!</strong></p>" +
+                             stimulus: "<p><strong>Block 1 von 2 beendet! Kurze Pause!</strong></p>" +
 			                           "<p>Drücken Sie die Leertaste, um fortzufahren.</p>" +
 			                           "<p>&nbsp;</p>" +
 			                           "<p><strong>ERINNERUNG:</strong></p>" +
-						               "<P>Bitte lesen Sie jeden Satz aufmerksam. Sobald Sie einen Satz gelesen und vestanden haben,</p>" +
-									   "<p>drücken Sie bitte die Leertaste. Dann folgt der nächste Satz.</p>" +
+						               "<P>Bitte lesen Sie jeden Satz aufmerksam durch. Sobald Sie den Satz gelesen und vestanden haben,</p>" +
+        						       "<p>drücken Sie bitte die Leertaste. Dann folgt der nächste Durchgang oder eine Verständnisfrage.</p>" +
 									   "<p>Bitte lesen Sie jeden Satz nur einmal.</p>" +
 									   "<p>&nbsp;</p>" +
-									   "<p>Fragen beantworten Sie durch Drücken der folgenden Tasten: </p>" +
-									   "<p><strong>Ja</strong> = Taste <strong>J</strong>.</p>" +
-									   "<p><strong>Nein</strong> = Taste <strong>N</strong>.</p>" +
-									   "<p>&nbsp;</p>" +
-									   "<p>Drücken Sie nun bitte die Leertaste, um die Pause zu beenden und fortzufahren.</p>",
-							 choices: ['space'],
+									   "<p>Die Fragen beantworten Sie durch das Drücken der folgenden Tasten:</p>" +
+									   "<p><strong>Ja</strong> = Taste <strong>C</strong>.</p>" +
+									   "<p><strong>Nein</strong> = Taste <strong>M</strong>.</p>",
+						     choices: ['space'],
 						     post_trial_gap: 1500				   
                            };
 
   var debriefing = {
 	                 type: "html-keyboard-response",
 					 stimulus: "<p><strong>Experiment beendet! Vielen Dank für Ihre Teilnahme!</strong></p>" +
-					    	   "<p>Zum Verlassen des Experiments drücken Sie bitte die Leertaste.</p>",
+					    	   "<p>Um fortzufahren, drücken Sie bitte die Leertaste.</p>",
 					 choices: ['space'],
 					 post_trial_gap: 500
 				   };						   
 
   var rests = [rest_after_block_1, debriefing];						   
-  /* END: create self-paced rest and debriefing */
+  /* END: create self-paced rests and debriefing */
   
   /* START: define subject and version number (and add it to data) */
   var subject_id = Math.floor(Math.random()*1000000);
-  var version = 1;  
+  var version = 3;  
   jsPsych.data.addProperties({VP: subject_id, date: Date()});
   /* END: define subject and version number (and add it to data) */
   
@@ -466,35 +465,33 @@
   /* START: create transfer of survey code */
   var transfer_survey_code = {
                                type: "html-keyboard-response",
-					           stimulus:"<p>Vielen Dank für Ihre Teilnahme an unserem Experiment.</p>" + 
-							   			"<p>Wenn Sie eine Bescheinigung für eine <strong>Versuchspersonenstunde (0,5h)</strong> benötigen,</p>" +	
+					           stimulus:"<p>Wenn Sie eine Bescheinigung für <strong>eine halbe Versuchspersonenstunde</strong> benötigen,</p>" +	
 									    "<p>senden Sie uns bitte eine E-Mail mit Ihrer <strong>Matrikelnummer</strong></p>" +
-										"<p>und dem <strong>unten stehenden Code</strong> an eine der unten stehenden E-Mail-Adressen.</p>" +
+										"<p>und dem <strong>unten stehenden Code</strong> an eine der aufgeführten E-Mail-Adressen.</p>" +
 										"<p>&nbsp;</p>" +
-										"<p>Wenn Sie an der <strong>Verlosung</strong> teilnehmen möchten,</p>" +	
-									    "<p>senden Sie uns bitte eine E-Mail mit dem <strong>unten stehenden Code</strong>" +
-										"<p>an eine der unten stehenden E-Mail-Adressen.</p>" +
+										"<p>Wenn Sie an der <strong>Gutscheinverlosung</strong> teilnehmen möchten,</p>" +	
+									    "<p>senden Sie uns bitte eine E-Mail mit dem <strong>unten stehenden Code</strong></p>" +
+										"<p>an eine der aufgeführten E-Mail-Adressen.</p>" +
 										"<p>&nbsp;</p>" +
-										"<p>Code:>" +
+										"<p><strong>Code:</strong></p>" +
 										 subject_id +
-										"<p>&nbsp;</p>" +
 										"<p>jonathan.goeth@student.uni-tuebingen.de</p>" +
 										"<p>lea-clarissa.koester@student.uni-tuebingen.de</p>" +
 										"<p>&nbsp;</p>" +
-										"<p>Sie können nun diesen Tab abschließend einfach schließen.</p>" ,
-										 response_ends_trial: false										 
+										"<p>Sie können das Browserfenster nun schließen.</p>",
+							   response_ends_trial: false										 
                              };
   /* END: create transfer of survey code */
 	   
   /* START: define timeline and start experiment */
   var timeline = [];
   timeline.push(requirements);
-  //timeline.push(html_block_consent);
+  timeline.push(html_block_consent);
   timeline.push({
 				  type: 'fullscreen', 
 				  fullscreen_mode: true, 
-				  message: '<p>Zur Information: Der Bildschirm wechselt jetzt in den Vollbildmodus.</p>'+
-						   '<p>Zum Fortfahren bitte "Weiter" klicken.</p>',
+				  message: '<p>Zu Ihrer Information: Der Bildschirm wechselt nun in den Vollbildmodus.</p>'+
+						   '<p>Bitte verbleiben Sie während des gesamten Experiments im Vollbildmodus.</p>',
 				  button_label: 'Weiter',
 				  on_finish: function(data){
 			                 var help_fullscreen = data.success;
@@ -505,7 +502,7 @@
   for(var i=0; i<randomized_block_order.length; i++){
 		   timeline.push(randomized_block_order[i]);
 		   timeline.push(rests[i])                
-		  };
+		                                            };
   timeline.push(save_data_block);
   timeline.push({type: "fullscreen", fullscreen_mode: false});
   timeline.push(transfer_survey_code);
@@ -513,7 +510,7 @@
       timeline:timeline,
 	  preload_images: images
 	          });
-  /* END: define timeline and start experiment */   
+  /* END: define timeline and start experiment */  
 						
    </script>
 </html>
